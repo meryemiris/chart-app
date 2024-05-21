@@ -11,10 +11,10 @@ const error = ref(null);
 const isLoading = ref(false);
 
 // assume these metrics are  always available for all accounts
-const metrics = ["Clicks", "Impressions", "Spend"];
+const metrics = ["clicks", "impressions", "spend"];
 
 const selectedAccount = ref(null);
-const selectedMetrics = ref(null);
+const selectedMetric = ref(null);
 
 const fetchData = async () => {
 	try {
@@ -37,25 +37,25 @@ const fetchData = async () => {
 	}
 };
 
-// filter data based on selected account and metrics
-const filteredData = computed(() => {
-	if (
-		!data.value ||
-		!selectedAccount.value ||
-		selectedMetrics.value.length === 0
-	)
-		return [];
+// filter data based on account
+
+const selectedAccountData = computed(() => {
+	if (!data.value || !selectedAccount.value || !selectedMetric.value) return [];
 
 	const account = data.value.accounts.find(
 		(a) => a.id === selectedAccount.value
 	);
+	console.log("account", account);
 
 	if (!account) return [];
+	return account.insights.data;
 
 	return account.insights.data.map((insight) => {
 		const filteredInsight = { date_start: insight.date_start };
 
-		selectedMetrics.value.forEach((metric) => {
+		console.log("filtered", filteredInsight);
+
+		selectedMetric.value.forEach((metric) => {
 			filteredInsight[metric.toLowerCase()] = insight[metric.toLowerCase()];
 		});
 
@@ -63,12 +63,25 @@ const filteredData = computed(() => {
 	});
 });
 
+const selectedMetricData = computed(() => {
+	console.log(selectedMetric.value, selectedAccount.value);
+	const dates = [];
+	const values = [];
+
+	selectedAccountData.value?.forEach((dataPoint) => {
+		dates.push(dataPoint.date_start);
+		values.push(dataPoint[selectedMetric.value]);
+	});
+	console.log(dates, values, selectedAccount);
+	return { dates, values };
+});
+
 function updateAccount(accountId) {
 	selectedAccount.value = accountId;
 }
 
-function updateMetrics(metrics) {
-	selectedMetrics.value = metrics;
+function updateMetric(metric) {
+	selectedMetric.value = metric;
 }
 onMounted(() => {
 	fetchData();
@@ -81,7 +94,7 @@ watch(
 			// Select the first account in the data
 			selectedAccount.value = newValue.accounts[0].id;
 			// Select the first metric in the metrics array
-			selectedMetrics.value = [metrics[0]];
+			selectedMetric.value = metrics[0];
 		}
 	}
 );
@@ -102,18 +115,18 @@ watch(
 			>
 				<SelectAccount
 					v-if="data?.accounts"
-					@update-account="updateAccount"
-					v-model="selectedAccount"
+					:setSelectedAccount="updateAccount"
+					:selectedAccount="selectedAccount"
 					:accounts="data?.accounts || []"
 				/>
 				<SelectMetric
 					v-if="metrics"
-					@update-metrics="updateMetrics"
-					v-model="selectedMetrics"
+					:setSelectedMetric="updateMetric"
+					:selectedMetric="selectedMetric"
 					:metrics="metrics"
 				/>
 			</div>
-			<Chart v-if="data" :data="filteredData" :metrics="selectedMetrics" />
+			<Chart v-if="data" :data="selectedMetricData" :metric="selectedMetric" />
 
 			<div v-if="isLoading">Loading...</div>
 			<div v-if="error">{{ error }}</div>

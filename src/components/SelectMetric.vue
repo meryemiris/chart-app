@@ -1,28 +1,12 @@
 <script setup>
-import { ref, defineProps, defineEmits } from "vue";
+import { defineProps } from "vue";
 import arrowRight from "../assets/arrow-right-line.svg";
 
 const props = defineProps({
 	metrics: Array,
+	selectedMetric: String,
+	setSelectedMetric: Function,
 });
-
-const emit = defineEmits(["update-metrics"]);
-
-// start with first metric selected
-const selected = ref(props.metrics[0]);
-
-function handleSelect(metric) {
-	if (selected.value.includes(metric)) {
-		selected.value = selected.value.filter((item) => item !== metric);
-	} else {
-		selected.value = [...selected.value, metric];
-	}
-	emit("update-metrics", [...selected.value]);
-}
-
-function isSelected(metric) {
-	return selected.value.includes(metric);
-}
 </script>
 
 <template>
@@ -33,10 +17,12 @@ function isSelected(metric) {
 			<button
 				v-for="metric in props.metrics"
 				:key="metric"
-				@click="handleSelect(metric)"
+				@click="setSelectedMetric(metric)"
 				:class="[
 					'rounded-full p-4',
-					isSelected(metric) ? 'bg-black text-white' : 'bg-gray-200 text-black',
+					selectedMetric === metric
+						? 'bg-black text-white'
+						: 'bg-gray-200 text-black',
 				]"
 			>
 				{{ metric }}

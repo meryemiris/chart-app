@@ -4,9 +4,9 @@ import arrowRight from "../assets/arrow-right-line.svg";
 
 const props = defineProps({
 	accounts: Array,
+	selectedAccount: String,
+	setSelectedAccount: Function,
 });
-
-const emit = defineEmits(["update-account"]);
 
 const sortedAccounts = computed(() =>
 	props.accounts
@@ -16,12 +16,6 @@ const sortedAccounts = computed(() =>
 );
 
 // start with the first account in the sorted list
-const selected = ref(sortedAccounts.value[0].id);
-
-function handleSelect(id) {
-	selected.value = id;
-	emit("update-account", id);
-}
 </script>
 
 <template>
@@ -32,10 +26,10 @@ function handleSelect(id) {
 			<button
 				v-for="account in sortedAccounts"
 				:key="account.id"
-				@click="handleSelect(account.id)"
+				@click="() => setSelectedAccount(account.id)"
 				:class="[
 					'rounded-full p-4 text-nowrap',
-					selected === account.id
+					selectedAccount === account.id
 						? 'bg-black text-white'
 						: 'bg-gray-200 text-black',
 				]"
