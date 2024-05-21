@@ -90,7 +90,7 @@ watch(
 <template>
 	<div class="m-0 p-0 max-w-full max-h-full overflow-hidden">
 		<header
-			class="flex mt-[38px] flex-col gap-3 text-center font-sans font-semibold w-full text-2xl"
+			class="flex lg:ml-[99px] lg:w-[825px] mt-[38px] lg:mt-[66px] flex-col gap-3 lg:gap-6 text-center font-sans font-semibold text-2xl/[30px] lg:text-5xl/[60px]"
 		>
 			<h1 class="text-primary">Marketing Integrations</h1>
 			<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
@@ -98,7 +98,7 @@ watch(
 
 		<main>
 			<div
-				class="font-sans flex flex-col gap-8 mt-8 text-sm font-semibold ml-8"
+				class="font-sans flex flex-col gap-8 lg:gap-14 mt-8 lg:mt-[71px] text-sm font-semibold ml-8"
 			>
 				<SelectAccount
 					v-if="data?.accounts"

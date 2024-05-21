@@ -34,12 +34,12 @@ const logos = [
 		>
 			<template v-for="logo in logos">
 				<li
-					class="flex items-center justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] rounded-[6.75px]"
+					class="flex items-center justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] lg:w-[132.39px] lg:h-[132.66px] rounded-[6.75px]"
 				>
 					<img
 						:src="logo.src"
 						:alt="logo.alt"
-						class="h-[30.38px] w-[30.38px]"
+						class="h-[30.38px] w-[30.38px] lg:w-[54px] lg:h-[54px]"
 					/>
 				</li>
 			</template>
@@ -49,12 +49,12 @@ const logos = [
 		>
 			<template v-for="logo in logos">
 				<li
-					class="flex items-center justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] rounded"
+					class="flex items-center justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] lg:w-[132.39px] lg:h-[132.66px] rounded"
 				>
 					<img
 						:src="logo.src"
 						:alt="logo.alt"
-						class="h-[30.38px] w-[30.38px]"
+						class="h-[30.38px] w-[30.38px] lg:w-[54px] lg:h-[54px]"
 					/>
 				</li>
 			</template>

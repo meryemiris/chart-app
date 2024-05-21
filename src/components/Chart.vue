@@ -137,11 +137,16 @@ watch(
 </script>
 
 <template>
-	<div class="bg-[#F9FAFB] flex-auto m-[33px] rounded-[4.5px]">
+	<div
+		class="flex items-center justify-center bg-[#F9FAFB] flex-auto m-[33px] lg:w-[956px] lg:h-[537px] rounded-[4.5px]"
+	>
 		<div
-			class="relative flex justify-center items-center p-[33px] h-[452px] w-[371px]"
+			class="relative flex justify-center items-center p-[33px] h-[452px] w-[371px] lg:w-[897px] lg:h-[481px]"
 		>
-			<div id="main" class="w-[338px] h-[423px] bg-red-50"></div>
+			<div
+				id="main"
+				class="w-[338px] h-[423px] lg:w-[897px] lg:h-[481px]"
+			></div>
 		</div>
 	</div>
 </template>
