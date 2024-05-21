@@ -4,6 +4,7 @@ import Chart from "./components/Chart.vue";
 import SelectAccount from "./components/SelectAccount.vue";
 import SelectMetric from "./components/SelectMetric.vue";
 import "./style.css";
+import Integrations from "./components/Integrations.vue";
 
 const data = ref(null);
 const error = ref(null);
@@ -117,5 +118,6 @@ watch(
 			<div v-if="isLoading">Loading...</div>
 			<div v-if="error">{{ error }}</div>
 		</main>
+		<Integrations />
 	</div>
 </template>

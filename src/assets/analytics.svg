@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,255.99538,255.99538">
+  <defs>
+    <linearGradient x1="78.356" y1="-18.355" x2="17.802" y2="42.197" gradientUnits="userSpaceOnUse" id="color-1_8BAdylwMaji2_gr1">
+      <stop offset="0" stop-color="#fcf219"></stop>
+      <stop offset="1" stop-color="#fcc419"></stop>
+    </linearGradient>
+    <linearGradient x1="39.657" y1="15.515" x2="-0.34" y2="55.511" gradientUnits="userSpaceOnUse" id="color-2_8BAdylwMaji2_gr2">
+      <stop offset="0" stop-color="#fcf219"></stop>
+      <stop offset="1" stop-color="#fcc419"></stop>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+    <g transform="scale(5.33333,5.33333)">
+      <path d="M42,6h-8c-2.209,0 -4,1.791 -4,4v32h8c2.209,0 4,-1.791 4,-4z" fill="url(#color-1_8BAdylwMaji2_gr1)"></path>
+      <path d="M18,22v8h-8c-2.209,0 -4,1.791 -4,4v8h12h12v-24h-8c-2.209,0 -4,1.791 -4,4z" fill="url(#color-2_8BAdylwMaji2_gr2)"></path>
+    </g>
+  </g>
+</svg>
