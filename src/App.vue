@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 import Chart from "./components/Chart.vue";
 import SelectAccount from "./components/SelectAccount.vue";
 import SelectMetric from "./components/SelectMetric.vue";
@@ -9,11 +9,11 @@ const data = ref(null);
 const error = ref(null);
 const isLoading = ref(false);
 
-const selectedAccount = ref(0);
-const selectedMetrics = ref([]);
-
 // assume these metrics are  always available for all accounts
-const metrics = ["Click", "Impression", "Spend"];
+const metrics = ["Clicks", "Impressions", "Spend"];
+
+const selectedAccount = ref(null);
+const selectedMetrics = ref(null);
 
 const fetchData = async () => {
 	try {
@@ -29,17 +29,61 @@ const fetchData = async () => {
 		}
 		const result = await response.json();
 		data.value = result;
-
-		console.log("initial data", result);
 	} catch (err) {
 		error.value = err.message;
 	} finally {
 		isLoading.value = false;
 	}
 };
+
+// filter data based on selected account and metrics
+const filteredData = computed(() => {
+	if (
+		!data.value ||
+		!selectedAccount.value ||
+		selectedMetrics.value.length === 0
+	)
+		return [];
+
+	const account = data.value.accounts.find(
+		(a) => a.id === selectedAccount.value
+	);
+
+	if (!account) return [];
+
+	return account.insights.data.map((insight) => {
+		const filteredInsight = { date_start: insight.date_start };
+
+		selectedMetrics.value.forEach((metric) => {
+			filteredInsight[metric.toLowerCase()] = insight[metric.toLowerCase()];
+		});
+
+		return filteredInsight;
+	});
+});
+
+function updateAccount(accountId) {
+	selectedAccount.value = accountId;
+}
+
+function updateMetrics(metrics) {
+	selectedMetrics.value = metrics;
+}
 onMounted(() => {
 	fetchData();
 });
+
+watch(
+	() => data.value,
+	(newValue) => {
+		if (newValue && newValue.accounts.length > 0) {
+			// Select the first account in the data
+			selectedAccount.value = newValue.accounts[0].id;
+			// Select the first metric in the metrics array
+			selectedMetrics.value = [metrics[0]];
+		}
+	}
+);
 </script>
 
 <template>
@@ -57,12 +101,18 @@ onMounted(() => {
 			>
 				<SelectAccount
 					v-if="data?.accounts"
+					@update-account="updateAccount"
 					v-model="selectedAccount"
 					:accounts="data?.accounts || []"
 				/>
-				<SelectMetric v-model="selectedMetrics" :metrics="metrics" />
+				<SelectMetric
+					v-if="metrics"
+					@update-metrics="updateMetrics"
+					v-model="selectedMetrics"
+					:metrics="metrics"
+				/>
 			</div>
-			<Chart :data="data?.accounts[selectedAccount]?.insights.data || []" />
+			<Chart v-if="data" :data="filteredData" :metrics="selectedMetrics" />
 
 			<div v-if="isLoading">Loading...</div>
 			<div v-if="error">{{ error }}</div>

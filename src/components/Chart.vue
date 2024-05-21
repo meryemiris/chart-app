@@ -8,66 +8,42 @@ const props = defineProps({
 	data: Array,
 });
 
-const chartLabels = ref([]);
-const spendData = ref([]);
-const clicksData = ref([]);
-const impressionsData = ref([]);
-
-const fetchData = async () => {
-	try {
-		isLoading.value = true;
-		const response = await fetch(import.meta.env.VITE_BASE_URL, {
-			method: "GET",
-			headers: {
-				token: import.meta.env.VITE_ACCESS_TOKEN,
-			},
-		});
-		if (!response.ok) {
-			throw new Error("Failed to fetch data");
-		}
-		const result = await response.json();
-		data.value = result;
-
-		createChart();
-	} catch (err) {
-		error.value = err.message;
-	} finally {
-		isLoading.value = false;
-	}
-};
+const chartInstance = ref(null);
 
 const createChart = () => {
-	const insightsData = props.data;
+	if (chartInstance.value) {
+		chartInstance.value.destroy(); // Destroy existing chart instance if any
+	}
+	console.log("chart data from chart", props.data);
 
-	chartLabels.value = insightsData.map((item) => item.date_start);
-	spendData.value = insightsData.map((item) => parseFloat(item.spend));
-	clicksData.value = insightsData.map((item) => parseInt(item.clicks));
-	impressionsData.value = insightsData.map((item) =>
-		parseInt(item.impressions)
-	);
+	const chartLabels = props.data.map((item) => item.date_start);
+	const spendData = props.data.map((item) => parseFloat(item.spend));
+	const clicksData = props.data.map((item) => parseInt(item.clicks));
+	const impressionsData = props.data.map((item) => parseInt(item.impressions));
+
 	const ctx = document.getElementById("myChart").getContext("2d");
-	new Chart(ctx, {
+	chartInstance.value = new Chart(ctx, {
 		type: "line",
 		data: {
-			labels: chartLabels.value,
+			labels: chartLabels,
 			datasets: [
 				{
 					label: "Spend",
-					data: spendData.value,
+					data: spendData,
 					borderColor: "rgb(75, 192, 192)",
 					backgroundColor: "rgba(75, 192, 192, 0.2)",
 					borderWidth: 1,
 				},
 				{
 					label: "Clicks",
-					data: clicksData.value,
+					data: clicksData,
 					borderColor: "rgb(54, 162, 235)",
 					backgroundColor: "rgba(54, 162, 235, 0.2)",
 					borderWidth: 1,
 				},
 				{
 					label: "Impressions",
-					data: impressionsData.value,
+					data: impressionsData,
 					borderColor: "rgb(255, 206, 86)",
 					backgroundColor: "rgba(255, 206, 86, 0.2)",
 					borderWidth: 1,
@@ -84,6 +60,8 @@ const createChart = () => {
 		},
 	});
 };
+
+onMounted(createChart);
 
 watch(
 	() => props.data,
@@ -102,5 +80,3 @@ watch(
 		</div>
 	</div>
 </template>
-
-<style scoped></style>

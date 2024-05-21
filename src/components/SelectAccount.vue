@@ -1,23 +1,27 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps, defineEmits, computed } from "vue";
 import arrowRight from "../assets/arrow-right-line.svg";
 
 const props = defineProps({
 	accounts: Array,
 });
 
-const selected = ref(null);
+const emit = defineEmits(["update-account"]);
+
+const sortedAccounts = computed(() =>
+	props.accounts
+		.slice()
+		.sort((a, b) => a.sort - b.sort)
+		.map((account) => ({ name: account.name, id: account.id }))
+);
+
+// start with the first account in the sorted list
+const selected = ref(sortedAccounts.value[0].id);
 
 function handleSelect(id) {
 	selected.value = id;
+	emit("update-account", id);
 }
-
-const sortedAccounts = props.accounts
-	.slice()
-	.sort((a, b) => a.sort - b.sort)
-	.map((account) => ({ name: account.name, id: account.id }));
-
-console.log("sortedAccounts", sortedAccounts);
 </script>
 
 <template>
