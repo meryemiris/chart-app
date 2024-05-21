@@ -88,7 +88,7 @@ watch(
 </script>
 
 <template>
-	<div class="m-0 p-0 w-full h-full">
+	<div class="m-0 p-0 max-w-full max-h-full overflow-hidden">
 		<header
 			class="flex mt-[38px] flex-col gap-3 text-center font-sans font-semibold w-full text-2xl"
 		>

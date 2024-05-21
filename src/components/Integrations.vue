@@ -27,23 +27,35 @@ const logos = [
 
 <template>
 	<div
-		class="mt-2 w-full inline-flex flex-nowrap overflow-contain [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
+		class="w-full inline-flex flex-nowrap overflow-contain mx-[33px] [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
 	>
 		<ul
-			class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll"
+			class="flex items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll"
 		>
 			<template v-for="logo in logos">
-				<li class="flex items-center justify-center bg-secondary p-2 rounded">
-					<img :src="logo.src" :alt="logo.alt" class="h-8 w-8" />
+				<li
+					class="flex items-center justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] rounded-[6.75px]"
+				>
+					<img
+						:src="logo.src"
+						:alt="logo.alt"
+						class="h-[30.38px] w-[30.38px]"
+					/>
 				</li>
 			</template>
 		</ul>
 		<ul
-			class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll"
+			class="flex items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll"
 		>
 			<template v-for="logo in logos">
-				<li class="flex items-center justify-center bg-secondary p-2 rounded">
-					<img :src="logo.src" :alt="logo.alt" class="h-8 w-8" />
+				<li
+					class="flex items-center justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] rounded"
+				>
+					<img
+						:src="logo.src"
+						:alt="logo.alt"
+						class="h-[30.38px] w-[30.38px]"
+					/>
 				</li>
 			</template>
 		</ul>

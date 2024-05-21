@@ -26,7 +26,7 @@ function handleSelect(id) {
 
 <template>
 	<section class="flex items-center space-x-7 w-full">
-		<h4>Select Ad Account</h4>
+		<h4 class="text-nowrap">Select Ad Account</h4>
 		<img :src="arrowRight" alt="arrow-right" class="w-4 h-4" />
 		<div class="flex space-x-4 w-full overflow-x-auto no-scrollbar">
 			<button
@@ -34,7 +34,7 @@ function handleSelect(id) {
 				:key="account.id"
 				@click="handleSelect(account.id)"
 				:class="[
-					'rounded-full p-4 w-full',
+					'rounded-full p-4 text-nowrap',
 					selected === account.id
 						? 'bg-black text-white'
 						: 'bg-gray-200 text-black',
