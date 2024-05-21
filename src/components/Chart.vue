@@ -1,8 +1,25 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { Chart, registerables } from "chart.js";
+import * as echarts from "echarts/core";
+import {
+	TitleComponent,
+	ToolboxComponent,
+	TooltipComponent,
+	GridComponent,
+	LegendComponent,
+} from "echarts/components";
+import { LineChart } from "echarts/charts";
+import { CanvasRenderer } from "echarts/renderers";
 
-Chart.register(...registerables);
+echarts.use([
+	TitleComponent,
+	ToolboxComponent,
+	TooltipComponent,
+	GridComponent,
+	LegendComponent,
+	LineChart,
+	CanvasRenderer,
+]);
 
 const props = defineProps({
 	data: Array,
@@ -11,54 +28,100 @@ const props = defineProps({
 const chartInstance = ref(null);
 
 const createChart = () => {
+	const chartDom = document.getElementById("main");
 	if (chartInstance.value) {
-		chartInstance.value.destroy(); // Destroy existing chart instance if any
+		chartInstance.value.dispose(); // Dispose existing chart instance if any
 	}
-	console.log("chart data from chart", props.data);
+	chartInstance.value = echarts.init(chartDom);
 
 	const chartLabels = props.data.map((item) => item.date_start);
 	const spendData = props.data.map((item) => parseFloat(item.spend));
 	const clicksData = props.data.map((item) => parseInt(item.clicks));
 	const impressionsData = props.data.map((item) => parseInt(item.impressions));
 
-	const ctx = document.getElementById("myChart").getContext("2d");
-	chartInstance.value = new Chart(ctx, {
-		type: "line",
-		data: {
-			labels: chartLabels,
-			datasets: [
-				{
-					label: "Spend",
-					data: spendData,
-					borderColor: "rgb(75, 192, 192)",
-					backgroundColor: "rgba(75, 192, 192, 0.2)",
-					borderWidth: 1,
-				},
-				{
-					label: "Clicks",
-					data: clicksData,
-					borderColor: "rgb(54, 162, 235)",
-					backgroundColor: "rgba(54, 162, 235, 0.2)",
-					borderWidth: 1,
-				},
-				{
-					label: "Impressions",
-					data: impressionsData,
-					borderColor: "rgb(255, 206, 86)",
-					backgroundColor: "rgba(255, 206, 86, 0.2)",
-					borderWidth: 1,
-				},
-			],
-		},
-		options: {
-			responsive: true,
-			scales: {
-				y: {
-					beginAtZero: true,
+	const option = {
+		// title: {
+		// 	text: "Chart Data",
+		// },
+		tooltip: {
+			trigger: "axis",
+			axisPointer: {
+				type: "cross",
+				label: {
+					backgroundColor: "rgba(0, 0, 0, 0.8)",
 				},
 			},
 		},
-	});
+		legend: {
+			data: ["Spend", "Clicks", "Impressions"],
+		},
+		toolbox: {
+			feature: {
+				saveAsImage: {},
+				// dataView: { readOnly: false },
+			},
+		},
+		grid: {
+			left: "3%",
+			right: "4%",
+			bottom: "3%",
+			containLabel: true,
+		},
+		xAxis: {
+			type: "category",
+			boundaryGap: false,
+			data: chartLabels,
+		},
+		yAxis: [
+			{
+				type: "value",
+				name: "Spend/Clicks",
+				position: "left",
+			},
+			{
+				type: "value",
+				name: "Impressions",
+				position: "right",
+			},
+		],
+		series: [
+			{
+				name: "Spend",
+				type: "line",
+				stack: "Total",
+				data: spendData,
+				emphasis: {
+					focus: "series",
+				},
+				areaStyle: {},
+				yAxisIndex: 0,
+			},
+			{
+				name: "Clicks",
+				type: "line",
+				stack: "Total",
+				data: clicksData,
+				emphasis: {
+					focus: "series",
+				},
+				areaStyle: {},
+				yAxisIndex: 0,
+			},
+			{
+				name: "Impressions",
+				type: "line",
+				stack: "Total",
+				data: impressionsData,
+				emphasis: {
+					focus: "series",
+				},
+				areaStyle: {},
+				yAxisIndex: 1,
+			},
+		],
+	};
+
+	chartInstance.value.setOption(option);
 };
 
 onMounted(createChart);
@@ -74,9 +137,11 @@ watch(
 </script>
 
 <template>
-	<div class="bg-slate-100 flex-auto">
-		<div class="relative flex items-center justify-center p-[33px] h-350-px">
-			<canvas id="myChart" width="400" height="400"></canvas>
+	<div class="bg-[#F9FAFB] flex-auto m-[33px] rounded-[4.5px]">
+		<div
+			class="relative flex justify-center items-center p-[33px] h-[452px] w-[371px]"
+		>
+			<div id="main" class="w-[338px] h-[423px] bg-red-50"></div>
 		</div>
 	</div>
 </template>
