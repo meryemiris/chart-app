@@ -1,14 +1,12 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
-const data = ref(null);
-const error = ref(null);
-const isLoading = ref(false);
-
-const selectedAccount = ref(0);
+const props = defineProps({
+	data: Array,
+});
 
 const chartLabels = ref([]);
 const spendData = ref([]);
@@ -39,7 +37,7 @@ const fetchData = async () => {
 };
 
 const createChart = () => {
-	const insightsData = data.value.accounts[selectedAccount.value].insights.data;
+	const insightsData = props.data;
 
 	chartLabels.value = insightsData.map((item) => item.date_start);
 	spendData.value = insightsData.map((item) => parseFloat(item.spend));
@@ -87,15 +85,22 @@ const createChart = () => {
 	});
 };
 
-onMounted(() => {
-	fetchData();
-});
+watch(
+	() => props.data,
+	(newData) => {
+		if (newData && newData.length) {
+			createChart();
+		}
+	}
+);
 </script>
 
 <template>
-	<canvas id="myChart" width="400" height="400"></canvas>
-	<div v-if="isLoading">Loading...</div>
-	<div v-if="error">{{ error }}</div>
+	<div class="bg-slate-100 flex-auto">
+		<div class="relative flex items-center justify-center p-[33px] h-350-px">
+			<canvas id="myChart" width="400" height="400"></canvas>
+		</div>
+	</div>
 </template>
 
 <style scoped></style>
