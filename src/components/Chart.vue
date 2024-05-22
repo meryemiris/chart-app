@@ -11,7 +11,7 @@ import {
 	LinearScale,
 } from "chart.js";
 
-import { computed, reactive } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 
 ChartJS.register(
 	Title,
@@ -38,19 +38,30 @@ const props = defineProps({
 	},
 });
 
-// Data and Options
+const color = ref("#ffafcc"); // default color
+
+// change color when metric is changed
+watch(
+	() => props.data.metric,
+	() => {
+		if (props.data.metric === "clicks") color.value = "#ffafcc";
+		else if (props.data.metric === "impressions") color.value = "#a2d2ff";
+		else color.value = "#cdb4db";
+	}
+);
+
 const chartData = computed(() => ({
 	labels: props.data.dates,
 	datasets: [
 		{
 			label: props.data.metric,
-			backgroundColor: "rgba(75, 192, 192, 0.2)",
-			borderColor: "rgba(75, 192, 192, 1)",
+			backgroundColor: color.value,
+			borderColor: color.value,
 			borderWidth: 5,
-			pointBackgroundColor: "rgba(75, 192, 192, 1)",
-			pointBorderColor: "#fff",
-			pointHoverBackgroundColor: "#fff",
-			pointHoverBorderColor: "rgba(75, 192, 192, 1)",
+			pointBackgroundColor: color.value,
+			pointBorderColor: color.value,
+			pointHoverBackgroundColor: "rgba(220,220,220,1)",
+			pointHoverBorderColor: "rgba(220,220,220,1)",
 			data: props.data.values,
 		},
 	],
@@ -59,13 +70,23 @@ const chartData = computed(() => ({
 const chartOptions = computed(() => ({
 	responsive: true,
 	maintainAspectRatio: false,
+
+	lineTension: 0.3,
+	pointRadius: 2,
+
+	maintainAspectRatio: false,
 	plugins: {
 		legend: {
 			position: "top",
-		},
-		title: {
-			display: true,
-			text: "Chart.js Line Chart",
+			labels: {
+				color: "131313",
+				boxWidth: 10,
+				boxHeight: 10,
+				font: {
+					weight: "lighter",
+					size: 16,
+				},
+			},
 		},
 	},
 	scales: {
@@ -80,16 +101,18 @@ const chartOptions = computed(() => ({
 
 const myStyles = reactive({
 	// mobile
-	height: "423px",
-	width: "338px",
-
-	// tablet-lg
-	// height: "481px",
-	// width: "897px",
+	// height: "423px",
+	// width: "338px",
 
 	// desktop-2xl
 	// height: "499px",
 	// width: "1195px",
+	height: "37vh",
+	width: "78vw",
+	maxWidth: "1195px",
+	maxHeight: "499px",
+	minWidth: "338px",
+	minHeight: "423px",
 
 	backgroundColor: "white",
 	position: "relative",
@@ -98,10 +121,10 @@ const myStyles = reactive({
 
 <template>
 	<div
-		class="flex items-center justify-center bg-[#F9FAFB] w-[371px] h-[452px] lg:w-[956px] 2xl:w-[1274px] lg:h-[537px] 2xl:h-[573px] rounded-[4.5px] 2xl:rounded-xl mb-[25px] lg:mb-[59px] 2xl:mb-0"
+		class="flex items-center justify-center bg-[#F9FAFB] w-[371px] h-[452px] lg:w-[857px] 2xl:w-[1274px] lg:h-[537px] 2xl:h-[573px] rounded-[4.5px] 2xl:rounded-xl mb-[25px] lg:mb-[59px] 2xl:mb-0"
 	>
-		<div>
-			<Line :data="chartData" :options="chartOptions" :style="myStyles" />
+		<div :style="myStyles">
+			<Line :data="chartData" :options="chartOptions" style="padding: 5px" />
 		</div>
 	</div>
 </template>
