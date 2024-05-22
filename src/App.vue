@@ -88,42 +88,50 @@ watch(
 
 <template>
 	<div
-		class="m-0 p-0 max-w-full max-h-full overflow-hidden font-sans font-semibold"
+		class="m-0 p-0 max-w-full max-h-full overflow-hidden font-sans font-semibold items-center justify-center flex flex-col"
 	>
 		<header
-			class="flex ml-[9px] lg:ml-[99px] w-[412.5px] lg:w-[825px] mt-[38px] lg:mt-[66px] flex-col gap-3 lg:gap-6 text-center text-2xl/[30px] lg:text-5xl/[60px]"
+			class="flex flex-col w-[412.5px] lg:w-[825px] 2xl:w-[1274px] mt-[38px] lg:mt-[66px] 2xl:mt-[196px] gap-3 lg:gap-6 text-center text-2xl/[30px] lg:text-5xl/[60px]"
 		>
 			<h1 class="text-primary">Marketing Integrations</h1>
 			<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
 		</header>
 
-		<main>
-			<div
-				class="flex flex-col gap-8 lg:gap-14 mt-[31px] lg:mt-[71px] ml-[33px] mb-[46.2px] text-sm"
-			>
-				<SelectAccount
-					v-if="apiData?.accounts"
-					:setSelectedAccount="updateAccount"
-					:selectedAccount="selectedAccount"
-					:accounts="apiData?.accounts || []"
-				/>
-				<SelectMetric
-					v-if="metrics"
-					:setSelectedMetric="updateMetric"
-					:selectedMetric="selectedMetric"
-					:metrics="metrics"
-				/>
-			</div>
-			<Chart
-				v-if="selectedMetricData"
-				:data="selectedMetricData"
-				:options="chartOptions"
-				:metric="selectedMetric"
-			/>
+		<div class="flex flex-row top-0">
+			<Integrations class="hidden 2xl:block" />
 
-			<div v-if="isLoading">Loading...</div>
-			<div v-if="error">{{ error }}</div>
-		</main>
-		<Integrations />
+			<main class="flex flex-col items-center">
+				<div
+					class="flex flex-col xl:flex-row gap-8 lg:gap-14 mt-[31px] lg:mt-[71px] 2xl:mt-[100px] mb-[46.2px] 2xl:mb-[70px] text-sm lg:text-[16px]"
+				>
+					<SelectAccount
+						v-if="apiData?.accounts"
+						:setSelectedAccount="updateAccount"
+						:selectedAccount="selectedAccount"
+						:accounts="apiData?.accounts || []"
+					/>
+					<div
+						class="hidden xl:block h-full border-[1.5px] border-[#D0D5DD]"
+					></div>
+					<SelectMetric
+						v-if="metrics"
+						:setSelectedMetric="updateMetric"
+						:selectedMetric="selectedMetric"
+						:metrics="metrics"
+					/>
+				</div>
+				<Chart
+					v-if="selectedMetricData"
+					:data="selectedMetricData"
+					:options="chartOptions"
+					:metric="selectedMetric"
+				/>
+
+				<div v-if="isLoading">Loading...</div>
+				<div v-if="error">{{ error }}</div>
+			</main>
+			<Integrations class="hidden 2xl:block" />
+		</div>
+		<Integrations class="clock 2xl:hidden" />
 	</div>
 </template>

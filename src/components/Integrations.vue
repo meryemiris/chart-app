@@ -27,14 +27,14 @@ const logos = [
 
 <template>
 	<div
-		class="w-full inline-flex flex-nowrap overflow-contain mt-[25px] mx-[33px] [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
+		class="relative top-0 2xl:top-[-58px] 2xl:h-[860px] max-w-screen-sm lg:max-w-screen-lg 2xl:flex-col inline-flex flex-nowrap mx-[33px] 2xl:mx-[90px] [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)] 2xl:[mask-image:_linear-gradient(to_top,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
 	>
 		<ul
-			class="flex items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll"
+			class="flex 2xl:flex-col items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll-x 2xl:animate-infinite-scroll-y"
 		>
 			<template v-for="logo in logos">
 				<li
-					class="flex items-center justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] lg:w-[132.39px] lg:h-[132.66px] rounded-[6.75px]"
+					class="flex items-center mb-12 justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] lg:w-[132.39px] lg:h-[132.66px] rounded-[6.75px]"
 				>
 					<img
 						:src="logo.src"
@@ -45,11 +45,11 @@ const logos = [
 			</template>
 		</ul>
 		<ul
-			class="flex items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll"
+			class="flex 2xl:flex-col items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll-x 2xl:animate-infinite-scroll-y"
 		>
 			<template v-for="logo in logos">
 				<li
-					class="flex items-center justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] lg:w-[132.39px] lg:h-[132.66px] rounded"
+					class="flex items-center mb-12 justify-center bg-[#F9FAFB] w-[75.03px] h-[74.62px] lg:w-[132.39px] lg:h-[132.66px] rounded-[6.75px]"
 				>
 					<img
 						:src="logo.src"

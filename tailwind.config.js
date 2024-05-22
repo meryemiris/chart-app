@@ -8,12 +8,17 @@ export default {
 
 		extend: {
 			animation: {
-				"infinite-scroll": "infinite-scroll 15s linear infinite",
+				"infinite-scroll-x": "infinite-scroll-x 15s linear infinite",
+				"infinite-scroll-y": "infinite-scroll-y 15s linear infinite",
 			},
 			keyframes: {
-				"infinite-scroll": {
+				"infinite-scroll-x": {
 					from: { transform: "translateX(0)" },
 					to: { transform: "translateX(-100%)" },
+				},
+				"infinite-scroll-y": {
+					from: { transform: "translateY(0)" },
+					to: { transform: "translateY(-100%)" },
 				},
 			},
 			colors: {
