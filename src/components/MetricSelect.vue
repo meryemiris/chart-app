@@ -6,7 +6,6 @@ const { metrics, selectedMetric, setSelectedMetric } = defineProps({
 	selectedMetric: String,
 	setSelectedMetric: Function,
 });
-console.log("metric", selectedMetric);
 const label = " Metric";
 </script>
 

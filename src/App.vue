@@ -1,18 +1,19 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
+import { Toaster, toast } from "vue-sonner";
+import "./style.css";
+
 import Chart from "./components/Chart.vue";
 import AccountSelect from "./components/AccountSelect.vue";
 import MetricSelect from "./components/MetricSelect.vue";
-import "./style.css";
 import Integrations from "./components/Integrations.vue";
-import { Toaster, toast } from "vue-sonner";
+import LoadingSpinner from "./components/LoadingSpinner.vue";
 
 import Facebook from "./assets/facebook.svg";
 import YouTube from "./assets/youtube.svg";
 import Instagram from "./assets/instagram.svg";
 import Shopify from "./assets/shopify.svg";
 import SnapChat from "./assets/snapchat.svg";
-
 import GoogleAnalytics from "./assets/analytics.svg";
 import WordPress from "./assets/wordpress.svg";
 import WooCommerce from "./assets/woo.svg";
@@ -26,7 +27,6 @@ const leftSideLogos = [
 	{ src: WooCommerce, alt: "WooCommerce" },
 	{ src: Gmail, alt: "Gmail" },
 ];
-
 const rightSideLogos = [
 	{ src: Facebook, alt: "Facebook" },
 	{ src: YouTube, alt: "YouTube" },
@@ -34,16 +34,12 @@ const rightSideLogos = [
 	{ src: Shopify, alt: "Shopify" },
 	{ src: SnapChat, alt: "SnapChat" },
 ];
-
 const logos = [...rightSideLogos, ...leftSideLogos];
 
 const apiData = ref(null);
-const error = ref(false);
 const isLoading = ref(false);
 
-import LoadingSpinner from "./components/LoadingSpinner.vue";
-
-// assume these metrics are  always available for all accounts
+// Assumed these metrics are  always available for all accounts
 const metrics = [
 	{ name: "Clicks", id: "clicks" },
 	{ name: "Impressions", id: "impressions" },
@@ -51,10 +47,7 @@ const metrics = [
 ];
 
 const selectedAccount = ref(null);
-console.log("account", selectedAccount.value);
-
 const selectedMetric = ref(null);
-console.log("metric", selectedMetric.value);
 
 const fetchData = async () => {
 	try {
@@ -71,9 +64,7 @@ const fetchData = async () => {
 		}
 		const result = await response.json();
 		apiData.value = result;
-		console.log("data", apiData.value);
 	} catch (err) {
-		error.value = err.message;
 		toast.error(err.message);
 	} finally {
 		isLoading.value = false;
@@ -84,7 +75,7 @@ onMounted(() => {
 	fetchData();
 });
 
-// update selected account and metric
+// Update selected account and metric.
 function updateAccount(account) {
 	selectedAccount.value = account;
 }
@@ -93,27 +84,32 @@ function updateMetric(metric) {
 	selectedMetric.value = metric;
 }
 
-// filter data based on account
-const selectedAccountData = computed(() => {
-	if (!apiData.value) return [];
+// Processes API data to extract dates and values for the selected
+// account and metric, returning the data formatted for charting.
+const chartInsights = computed(() => {
+	if (!apiData.value) {
+		toast.error("Error: Failed to load API data.");
+		return [];
+	}
+
+	const dates = [];
+	const values = [];
 
 	const account = apiData.value.accounts.find(
 		(a) => a.id === selectedAccount.value
 	);
 
-	if (!account) return [];
-	return account.insights.data;
-});
+	if (!account) {
+		toast.error("Error: Selected account not found.");
+		return [];
+	}
 
-const selectedMetricData = computed(() => {
-	const dates = [];
-	const values = [];
-
-	selectedAccountData.value?.forEach((dataPoint) => {
+	const insights = account.insights.data;
+	insights?.forEach((dataPoint) => {
 		dates.push(dataPoint.date_start);
 		values.push(dataPoint[selectedMetric.value]);
-		console.log(selectedMetric.value);
 	});
+
 	return { dates, values, metric: selectedMetric.value };
 });
 
@@ -124,10 +120,10 @@ const sortedAccounts = computed(() =>
 		.map((account) => ({ name: account.name, id: account.id }))
 );
 
+// Start first account and metric selected
 watch(
 	() => apiData.value,
 	() => {
-		// start first account and metric selected
 		selectedAccount.value = sortedAccounts.value[0].id;
 		selectedMetric.value = metrics[0].id;
 	}
@@ -135,7 +131,7 @@ watch(
 </script>
 
 <template>
-	<Toaster position="top-right" rich-colors="true" />
+	<Toaster position="top-right" rich-colors />
 	<LoadingSpinner v-if="isLoading" />
 	<div
 		class="m-0 p-0 max-w-full max-h-full overflow-hidden font-sans font-semibold items-center justify-center flex flex-col"
@@ -170,11 +166,7 @@ watch(
 						:metrics="metrics"
 					/>
 				</div>
-				<Chart
-					v-if="selectedMetricData"
-					:data="selectedMetricData"
-					:options="chartOptions"
-				/>
+				<Chart v-if="chartInsights" :data="chartInsights" />
 			</main>
 			<Integrations :logos="rightSideLogos" class="hidden 2xl:block" />
 		</div>
