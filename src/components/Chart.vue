@@ -32,8 +32,9 @@ const props = defineProps({
 		type: Object,
 		default: () => ({}),
 	},
-	metric: {
-		type: String,
+	style: {
+		type: Object,
+		default: () => ({}),
 	},
 });
 
@@ -42,7 +43,7 @@ const chartData = computed(() => ({
 	labels: props.data.dates,
 	datasets: [
 		{
-			label: props.metric,
+			label: props.data.metric,
 			backgroundColor: "rgba(75, 192, 192, 0.2)",
 			borderColor: "rgba(75, 192, 192, 1)",
 			borderWidth: 5,

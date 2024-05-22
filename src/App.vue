@@ -62,7 +62,7 @@ const selectedMetricData = computed(() => {
 		dates.push(dataPoint.date_start);
 		values.push(dataPoint[selectedMetric.value]);
 	});
-	return { dates, values };
+	return { dates, values, metric: selectedMetric.value };
 });
 
 function updateAccount(accountId) {
@@ -124,7 +124,6 @@ watch(
 					v-if="selectedMetricData"
 					:data="selectedMetricData"
 					:options="chartOptions"
-					:metric="selectedMetric"
 				/>
 
 				<div v-if="isLoading">Loading...</div>
