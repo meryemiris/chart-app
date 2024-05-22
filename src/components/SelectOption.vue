@@ -1,16 +1,17 @@
 <script setup>
 import arrowRight from "../assets/arrow-right-line.svg";
 
-const props = defineProps({
-	metrics: Array,
-	selectedMetric: String,
-	setSelectedMetric: Function,
+const { label, options, selectedOption, setSelectedOption } = defineProps({
+	label: String,
+	options: Array,
+	selectedOption: String,
+	setSelectedOption: Function,
 });
 </script>
 
 <template>
 	<section class="flex items-center space-x-7">
-		<h4 class="text-nowrap">Select Metric</h4>
+		<h4 class="text-nowrap">Select {{ label }}</h4>
 		<img
 			:src="arrowRight"
 			alt="arrow-right"
@@ -18,17 +19,17 @@ const props = defineProps({
 		/>
 		<div class="flex gap-[21.6px] 2xl:gap-6 overflow-x-auto no-scrollbar">
 			<button
-				v-for="metric in props.metrics"
-				:key="metric"
-				@click="setSelectedMetric(metric)"
+				v-for="option in options"
+				:key="option.id"
+				@click="setSelectedOption(option.id)"
 				:class="[
 					'rounded-full text-nowrap p-4',
-					selectedMetric === metric
+					selectedOption === option.id
 						? 'bg-primary text-white'
 						: 'bg-[#F9FAFB] text-[#D0D5DD]',
 				]"
 			>
-				{{ metric }}
+				{{ option.name }}
 			</button>
 		</div>
 	</section>

@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import Chart from "./components/Chart.vue";
-import SelectAccount from "./components/SelectAccount.vue";
-import SelectMetric from "./components/SelectMetric.vue";
+import AccountSelect from "./components/AccountSelect.vue";
+import MetricSelect from "./components/MetricSelect.vue";
 import "./style.css";
 import Integrations from "./components/Integrations.vue";
 import { Toaster, toast } from "vue-sonner";
@@ -44,10 +44,17 @@ const isLoading = ref(false);
 import LoadingSpinner from "./components/LoadingSpinner.vue";
 
 // assume these metrics are  always available for all accounts
-const metrics = ["clicks", "impressions", "spend"];
+const metrics = [
+	{ name: "Clicks", id: "clicks" },
+	{ name: "Impressions", id: "impressions" },
+	{ name: "Spend", id: "spend" },
+];
 
 const selectedAccount = ref(null);
+console.log("account", selectedAccount.value);
+
 const selectedMetric = ref(null);
+console.log("metric", selectedMetric.value);
 
 const fetchData = async () => {
 	try {
@@ -64,6 +71,7 @@ const fetchData = async () => {
 		}
 		const result = await response.json();
 		apiData.value = result;
+		console.log("data", apiData.value);
 	} catch (err) {
 		error.value = err.message;
 		toast.error(err.message);
@@ -76,8 +84,16 @@ onMounted(() => {
 	fetchData();
 });
 
-// filter data based on account
+// update selected account and metric
+function updateAccount(account) {
+	selectedAccount.value = account;
+}
 
+function updateMetric(metric) {
+	selectedMetric.value = metric;
+}
+
+// filter data based on account
 const selectedAccountData = computed(() => {
 	if (!apiData.value) return [];
 
@@ -96,27 +112,24 @@ const selectedMetricData = computed(() => {
 	selectedAccountData.value?.forEach((dataPoint) => {
 		dates.push(dataPoint.date_start);
 		values.push(dataPoint[selectedMetric.value]);
+		console.log(selectedMetric.value);
 	});
 	return { dates, values, metric: selectedMetric.value };
 });
 
-function updateAccount(accountId) {
-	selectedAccount.value = accountId;
-}
-
-function updateMetric(metric) {
-	selectedMetric.value = metric;
-}
+const sortedAccounts = computed(() =>
+	apiData.value?.accounts
+		.slice()
+		.sort((a, b) => a.sort - b.sort)
+		.map((account) => ({ name: account.name, id: account.id }))
+);
 
 watch(
 	() => apiData.value,
-	(newValue) => {
-		if (newValue && newValue.accounts.length > 0) {
-			// Select the first account in the data
-			selectedAccount.value = newValue.accounts[0].id;
-			// Select the first metric in the metrics array
-			selectedMetric.value = metrics[0];
-		}
+	() => {
+		// start first account and metric selected
+		selectedAccount.value = sortedAccounts.value[0].id;
+		selectedMetric.value = metrics[0].id;
 	}
 );
 </script>
@@ -141,16 +154,16 @@ watch(
 				<div
 					class="flex flex-col xl:flex-row gap-8 lg:gap-14 mt-[31px] lg:mt-[71px] 2xl:mt-[100px] mb-[46.2px] 2xl:mb-[70px] text-sm lg:text-[16px]"
 				>
-					<SelectAccount
+					<AccountSelect
 						v-if="apiData?.accounts"
 						:setSelectedAccount="updateAccount"
 						:selectedAccount="selectedAccount"
-						:accounts="apiData?.accounts || []"
+						:accounts="sortedAccounts"
 					/>
 					<div
 						class="hidden xl:block h-full border-[1.5px] border-[#D0D5DD]"
 					></div>
-					<SelectMetric
+					<MetricSelect
 						v-if="metrics"
 						:setSelectedMetric="updateMetric"
 						:selectedMetric="selectedMetric"
