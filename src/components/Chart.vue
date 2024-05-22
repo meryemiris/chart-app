@@ -10,6 +10,7 @@ import {
 	CategoryScale,
 	LinearScale,
 } from "chart.js";
+
 import { computed, reactive } from "vue";
 
 ChartJS.register(
@@ -56,6 +57,7 @@ const chartData = computed(() => ({
 
 const chartOptions = computed(() => ({
 	responsive: true,
+	maintainAspectRatio: false,
 	plugins: {
 		legend: {
 			position: "top",
@@ -76,8 +78,18 @@ const chartOptions = computed(() => ({
 }));
 
 const myStyles = reactive({
+	// mobile
 	height: "423px",
 	width: "338px",
+
+	// tablet-lg
+	// height: "481px",
+	// width: "897px",
+
+	// desktop-2xl
+	// height: "499px",
+	// width: "1195px",
+
 	backgroundColor: "white",
 	position: "relative",
 });
@@ -85,15 +97,10 @@ const myStyles = reactive({
 
 <template>
 	<div
-		class="flex items-center justify-center bg-[#F9FAFB] w-[371px] h-[452px] rounded-[4.5px] ml-[33px]"
+		class="flex items-center justify-center bg-[#F9FAFB] w-[371px] h-[452px] lg:w-[956px] 2xl:w-[1274px] lg:h-[537px] 2xl:h-[573px] rounded-[4.5px] 2xl:rounded-xl mb-[25px] lg:mb-[59px] 2xl:mb-0"
 	>
 		<div>
-			<Line
-				v-if="chartData && chartOptions"
-				:data="chartData"
-				:options="chartOptions"
-				:style="myStyles"
-			/>
+			<Line :data="chartData" :options="chartOptions" :style="myStyles" />
 		</div>
 	</div>
 </template>
