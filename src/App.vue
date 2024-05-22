@@ -5,10 +5,13 @@ import SelectAccount from "./components/SelectAccount.vue";
 import SelectMetric from "./components/SelectMetric.vue";
 import "./style.css";
 import Integrations from "./components/Integrations.vue";
+import { Toaster, toast } from "vue-sonner";
 
 const apiData = ref(null);
-const error = ref(null);
+const error = ref(false);
 const isLoading = ref(false);
+
+import LoadingSpinner from "./components/LoadingSpinner.vue";
 
 // assume these metrics are  always available for all accounts
 const metrics = ["clicks", "impressions", "spend"];
@@ -26,12 +29,14 @@ const fetchData = async () => {
 			},
 		});
 		if (!response.ok) {
+			toast.error("Failed to fetch data");
 			throw new Error("Failed to fetch data");
 		}
 		const result = await response.json();
 		apiData.value = result;
 	} catch (err) {
 		error.value = err.message;
+		toast.error(err.message);
 	} finally {
 		isLoading.value = false;
 	}
@@ -87,6 +92,8 @@ watch(
 </script>
 
 <template>
+	<Toaster position="top-right" rich-colors="true" />
+	<LoadingSpinner v-if="isLoading" />
 	<div
 		class="m-0 p-0 max-w-full max-h-full overflow-hidden font-sans font-semibold items-center justify-center flex flex-col"
 	>
@@ -125,9 +132,6 @@ watch(
 					:data="selectedMetricData"
 					:options="chartOptions"
 				/>
-
-				<div v-if="isLoading">Loading...</div>
-				<div v-if="error">{{ error }}</div>
 			</main>
 			<Integrations class="hidden 2xl:block" />
 		</div>
