@@ -133,22 +133,27 @@ watch(
 <template>
 	<Toaster position="top-right" rich-colors />
 	<LoadingSpinner v-if="isLoading" />
-	<div
-		class="m-0 p-0 max-w-full max-h-full overflow-hidden font-sans font-semibold items-center justify-center flex flex-col"
+
+	<main
+		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:my-[196px] 2xl:w-[1920px] 2xl:m-auto"
 	>
-		<header
-			class="flex flex-col w-[412.5px] lg:w-[825px] 2xl:w-[1274px] mt-[38px] lg:mt-[66px] 2xl:mt-[196px] gap-3 lg:gap-6 text-center text-2xl/[30px] lg:text-5xl/[60px]"
-		>
-			<h1 class="text-primary">Marketing Integrations</h1>
-			<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
-		</header>
+		<Integrations
+			:logos="leftSideLogos"
+			class="hidden 2xl:block 2xl:px-[100px]"
+		/>
 
-		<div class="flex flex-row">
-			<Integrations :logos="leftSideLogos" class="hidden 2xl:block" />
+		<div class="flex flex-col">
+			<header
+				class="flex flex-col mx-2 text-center text-2xl/[30px] lg:text-5xl/[60px] gap-3 lg:gap-6 lg:mx-[100px]"
+			>
+				<h1 class="text-primary">Marketing Integrations</h1>
+				<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
+			</header>
 
-			<main class="flex flex-col">
-				<div
-					class="flex flex-col md:pl-0 max-w-[430px] sm:max-w-full md:max-w- 2xl:max-w-[1274px] 2xl:flex-row gap-8 2xl:gap-9 mt-[31px] lg:mt-[71px] 2xl:mt-[100px] mb-[46.2px] 2xl:mb-[70px] text-sm lg:text-[16px]"
+			<section id="content" class="mx-[33px]">
+				<section
+					id="selects"
+					class="flex flex-col mt-8 mb-12 mr-[-33px] gap-8 lg:my-[71px] lg:pl-[17px] lg:gap-14 lg:text-[16px]/[38px] 2xl:flex-row 2xl:mx-9"
 				>
 					<AccountSelect
 						v-if="apiData?.accounts"
@@ -156,20 +161,25 @@ watch(
 						:selectedAccount="selectedAccount"
 						:accounts="sortedAccounts"
 					/>
-					<div
-						class="hidden 2xl:block h-full border-[1.5px] border-[#D0D5DD]"
-					></div>
+
+					<!-- seperator -->
+					<div class="hidden 2xl:block border-[1.5px] border-[#D0D5DD]"></div>
+
 					<MetricSelect
 						v-if="metrics"
 						:setSelectedMetric="updateMetric"
 						:selectedMetric="selectedMetric"
 						:metrics="metrics"
 					/>
-				</div>
+				</section>
 				<Chart v-if="chartInsights" :data="chartInsights" />
-			</main>
-			<Integrations :logos="rightSideLogos" class="hidden 2xl:block" />
+			</section>
 		</div>
+
+		<Integrations
+			:logos="rightSideLogos"
+			class="hidden 2xl:block 2xl:px-[100px]"
+		/>
 		<Integrations :logos="logos" class="block 2xl:hidden" />
-	</div>
+	</main>
 </template>

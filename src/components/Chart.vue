@@ -11,15 +11,7 @@ import {
 	LinearScale,
 } from "chart.js";
 
-import {
-	computed,
-	onBeforeUnmount,
-	onMounted,
-	reactive,
-	ref,
-	watch,
-} from "vue";
-import { layout } from "@chakra-ui/react";
+import { computed, ref, watch } from "vue";
 
 ChartJS.register(
 	Title,
@@ -40,15 +32,10 @@ const props = defineProps({
 		type: Object,
 		default: () => ({}),
 	},
-	style: {
-		type: Object,
-		default: () => ({}),
-	},
 });
 
-const color = ref("#ffafcc"); // default color
+const color = ref("#ffafcc");
 
-// change color when metric is changed
 watch(
 	() => props.data.metric,
 	() => {
@@ -57,32 +44,6 @@ watch(
 		else color.value = "#cdb4db";
 	}
 );
-
-const updateChartSize = () => {
-	const width = window.innerWidth;
-	if (width < 768) {
-		// Mobile
-		myStyles.height = "423px";
-		myStyles.width = "338px";
-	} else if (width < 1025) {
-		// Tablet
-		myStyles.height = "481px";
-		myStyles.width = "897px";
-	} else if (width > 1024) {
-		// Desktop
-		myStyles.height = "499px";
-		myStyles.width = "1195px";
-	}
-};
-
-onMounted(() => {
-	window.addEventListener("resize", updateChartSize);
-	updateChartSize(); // initial size
-});
-
-onBeforeUnmount(() => {
-	window.removeEventListener("resize", updateChartSize);
-});
 
 const chartData = computed(() => ({
 	labels: props.data.dates,
@@ -104,11 +65,7 @@ const chartData = computed(() => ({
 const chartOptions = computed(() => ({
 	responsive: true,
 	maintainAspectRatio: false,
-
-	lineTension: 0.3,
 	pointRadius: 2,
-
-	maintainAspectRatio: false,
 	plugins: {
 		legend: {
 			position: "top",
@@ -126,30 +83,20 @@ const chartOptions = computed(() => ({
 
 	scales: {
 		x: {
-			beginAtZero: true,
-			ticks: {
-				fontSize: 40,
-			},
+			beginAtZero: false,
 		},
 		y: {
-			beginAtZero: true,
+			beginAtZero: false,
 		},
 	},
 }));
-
-const myStyles = reactive({
-	height: "423px",
-	width: "338px",
-	backgroundColor: "white",
-	position: "relative",
-});
 </script>
 
 <template>
 	<div
-		class="flex items-center bg-[#F9FAFB] justify-center w-[371px] h-[452px] lg:w-[956px] 2xl:w-[1274px] lg:h-[537px] 2xl:h-[573px] rounded-[4.5px] 2xl:rounded-xl mb-[25px] lg:mb-[59px] 2xl:mb-0"
+		class="bg-[#F9FAFB] p-4 lg:p-7 2xl:p-10 rounded-[4.5px] lg:rounded-[9px] 2xl:rounded-xl"
 	>
-		<div :style="myStyles">
+		<div class="bg-red-50 h-[423px] lg:[481px] 2xl:[499px]">
 			<Line :data="chartData" :options="chartOptions" />
 		</div>
 	</div>
