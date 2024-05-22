@@ -6,7 +6,7 @@ import SelectMetric from "./components/SelectMetric.vue";
 import "./style.css";
 import Integrations from "./components/Integrations.vue";
 
-const data = ref(null);
+const apiData = ref(null);
 const error = ref(null);
 const isLoading = ref(false);
 
@@ -29,7 +29,7 @@ const fetchData = async () => {
 			throw new Error("Failed to fetch data");
 		}
 		const result = await response.json();
-		data.value = result;
+		apiData.value = result;
 	} catch (err) {
 		error.value = err.message;
 	} finally {
@@ -37,34 +37,24 @@ const fetchData = async () => {
 	}
 };
 
+onMounted(() => {
+	fetchData();
+});
+
 // filter data based on account
 
 const selectedAccountData = computed(() => {
-	if (!data.value || !selectedAccount.value || !selectedMetric.value) return [];
+	if (!apiData.value) return [];
 
-	const account = data.value.accounts.find(
+	const account = apiData.value.accounts.find(
 		(a) => a.id === selectedAccount.value
 	);
-	console.log("account", account);
 
 	if (!account) return [];
 	return account.insights.data;
-
-	return account.insights.data.map((insight) => {
-		const filteredInsight = { date_start: insight.date_start };
-
-		console.log("filtered", filteredInsight);
-
-		selectedMetric.value.forEach((metric) => {
-			filteredInsight[metric.toLowerCase()] = insight[metric.toLowerCase()];
-		});
-
-		return filteredInsight;
-	});
 });
 
 const selectedMetricData = computed(() => {
-	console.log(selectedMetric.value, selectedAccount.value);
 	const dates = [];
 	const values = [];
 
@@ -72,7 +62,6 @@ const selectedMetricData = computed(() => {
 		dates.push(dataPoint.date_start);
 		values.push(dataPoint[selectedMetric.value]);
 	});
-	console.log(dates, values, selectedAccount);
 	return { dates, values };
 });
 
@@ -83,12 +72,9 @@ function updateAccount(accountId) {
 function updateMetric(metric) {
 	selectedMetric.value = metric;
 }
-onMounted(() => {
-	fetchData();
-});
 
 watch(
-	() => data.value,
+	() => apiData.value,
 	(newValue) => {
 		if (newValue && newValue.accounts.length > 0) {
 			// Select the first account in the data
@@ -101,9 +87,11 @@ watch(
 </script>
 
 <template>
-	<div class="m-0 p-0 max-w-full max-h-full overflow-hidden">
+	<div
+		class="m-0 p-0 max-w-full max-h-full overflow-hidden font-sans font-semibold"
+	>
 		<header
-			class="flex lg:ml-[99px] lg:w-[825px] mt-[38px] lg:mt-[66px] flex-col gap-3 lg:gap-6 text-center font-sans font-semibold text-2xl/[30px] lg:text-5xl/[60px]"
+			class="flex ml-[9px] lg:ml-[99px] w-[412.5px] lg:w-[825px] mt-[38px] lg:mt-[66px] flex-col gap-3 lg:gap-6 text-center text-2xl/[30px] lg:text-5xl/[60px]"
 		>
 			<h1 class="text-primary">Marketing Integrations</h1>
 			<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
@@ -111,13 +99,13 @@ watch(
 
 		<main>
 			<div
-				class="font-sans flex flex-col gap-8 lg:gap-14 mt-8 lg:mt-[71px] text-sm font-semibold ml-8"
+				class="flex flex-col gap-8 lg:gap-14 mt-[31px] lg:mt-[71px] ml-[33px] mb-[46.2px] text-sm"
 			>
 				<SelectAccount
-					v-if="data?.accounts"
+					v-if="apiData?.accounts"
 					:setSelectedAccount="updateAccount"
 					:selectedAccount="selectedAccount"
-					:accounts="data?.accounts || []"
+					:accounts="apiData?.accounts || []"
 				/>
 				<SelectMetric
 					v-if="metrics"
@@ -126,7 +114,12 @@ watch(
 					:metrics="metrics"
 				/>
 			</div>
-			<Chart v-if="data" :data="selectedMetricData" :metric="selectedMetric" />
+			<Chart
+				v-if="selectedMetricData"
+				:data="selectedMetricData"
+				:options="chartOptions"
+				:metric="selectedMetric"
+			/>
 
 			<div v-if="isLoading">Loading...</div>
 			<div v-if="error">{{ error }}</div>

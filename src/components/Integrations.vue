@@ -27,7 +27,7 @@ const logos = [
 
 <template>
 	<div
-		class="w-full inline-flex flex-nowrap overflow-contain mx-[33px] [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
+		class="w-full inline-flex flex-nowrap overflow-contain mt-[25px] mx-[33px] [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
 	>
 		<ul
 			class="flex items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll"

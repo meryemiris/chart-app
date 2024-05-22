@@ -21,8 +21,8 @@ const sortedAccounts = computed(() =>
 <template>
 	<section class="flex items-center space-x-7 w-full">
 		<h4 class="text-nowrap">Select Ad Account</h4>
-		<img :src="arrowRight" alt="arrow-right" class="w-4 h-4" />
-		<div class="flex space-x-4 w-full overflow-x-auto no-scrollbar">
+		<img :src="arrowRight" alt="arrow-right" class="w-[21.6px] h-[21.6px]" />
+		<div class="flex gap-[21.6px] w-full overflow-x-auto no-scrollbar">
 			<button
 				v-for="account in sortedAccounts"
 				:key="account.id"
@@ -30,8 +30,8 @@ const sortedAccounts = computed(() =>
 				:class="[
 					'rounded-full p-4 text-nowrap',
 					selectedAccount === account.id
-						? 'bg-black text-white'
-						: 'bg-gray-200 text-black',
+						? 'bg-primary text-white'
+						: 'bg-[#F9FAFB] text-[#D0D5DD]',
 				]"
 			>
 				{{ account.name }}
