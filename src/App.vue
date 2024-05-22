@@ -7,6 +7,36 @@ import "./style.css";
 import Integrations from "./components/Integrations.vue";
 import { Toaster, toast } from "vue-sonner";
 
+import Facebook from "./assets/facebook.svg";
+import YouTube from "./assets/youtube.svg";
+import Instagram from "./assets/instagram.svg";
+import Shopify from "./assets/shopify.svg";
+import SnapChat from "./assets/snapchat.svg";
+
+import GoogleAnalytics from "./assets/analytics.svg";
+import WordPress from "./assets/wordpress.svg";
+import WooCommerce from "./assets/woo.svg";
+import LinkedIn from "./assets/linkedin.svg";
+import Gmail from "./assets/gmail.svg";
+
+const leftSideLogos = [
+	{ src: GoogleAnalytics, alt: "Google Analytics" },
+	{ src: WordPress, alt: "WordPress" },
+	{ src: LinkedIn, alt: "LinkedIn" },
+	{ src: WooCommerce, alt: "WooCommerce" },
+	{ src: Gmail, alt: "Gmail" },
+];
+
+const rightSideLogos = [
+	{ src: Facebook, alt: "Facebook" },
+	{ src: YouTube, alt: "YouTube" },
+	{ src: Instagram, alt: "Instagram" },
+	{ src: Shopify, alt: "Shopify" },
+	{ src: SnapChat, alt: "SnapChat" },
+];
+
+const logos = [...rightSideLogos, ...leftSideLogos];
+
 const apiData = ref(null);
 const error = ref(false);
 const isLoading = ref(false);
@@ -105,7 +135,7 @@ watch(
 		</header>
 
 		<div class="flex flex-row top-0">
-			<Integrations class="hidden 2xl:block" />
+			<Integrations :logos="leftSideLogos" class="hidden 2xl:block" />
 
 			<main class="flex flex-col items-center">
 				<div
@@ -133,8 +163,8 @@ watch(
 					:options="chartOptions"
 				/>
 			</main>
-			<Integrations class="hidden 2xl:block" />
+			<Integrations :logos="rightSideLogos" class="hidden 2xl:block" />
 		</div>
-		<Integrations class="clock 2xl:hidden" />
+		<Integrations :logos="logos" class="clock 2xl:hidden" />
 	</div>
 </template>

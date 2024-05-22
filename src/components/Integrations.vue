@@ -1,28 +1,10 @@
 <script setup>
-import Facebook from "../assets/facebook.svg";
-import YouTube from "../assets/youtube.svg";
-import Instagram from "../assets/instagram.svg";
-import Shopify from "../assets/shopify.svg";
-import SnapChat from "../assets/snapchat.svg";
-
-import GoogleAnalytics from "../assets/analytics.svg";
-import WordPress from "../assets/wordpress.svg";
-import WooCommerce from "../assets/woo.svg";
-import LinkedIn from "../assets/linkedin.svg";
-import Gmail from "../assets/gmail.svg";
-
-const logos = [
-	{ src: GoogleAnalytics, alt: "Google Analytics" },
-	{ src: WordPress, alt: "WordPress" },
-	{ src: LinkedIn, alt: "LinkedIn" },
-	{ src: WooCommerce, alt: "WooCommerce" },
-	{ src: Gmail, alt: "Gmail" },
-	{ src: Facebook, alt: "Facebook" },
-	{ src: YouTube, alt: "YouTube" },
-	{ src: Instagram, alt: "Instagram" },
-	{ src: Shopify, alt: "Shopify" },
-	{ src: SnapChat, alt: "SnapChat" },
-];
+const { logos } = defineProps({
+	logos: {
+		type: Array,
+		required: true,
+	},
+});
 </script>
 
 <template>
