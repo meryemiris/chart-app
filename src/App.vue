@@ -143,12 +143,12 @@ watch(
 			<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
 		</header>
 
-		<div class="flex flex-row top-0">
+		<div class="flex flex-row">
 			<Integrations :logos="leftSideLogos" class="hidden 2xl:block" />
 
-			<main class="flex flex-col items-center">
+			<main class="flex flex-col">
 				<div
-					class="flex flex-col xl:flex-row gap-8 lg:gap-14 mt-[31px] lg:mt-[71px] 2xl:mt-[100px] mb-[46.2px] 2xl:mb-[70px] text-sm lg:text-[16px]"
+					class="flex flex-col md:pl-0 max-w-[430px] sm:max-w-full md:max-w- 2xl:max-w-[1274px] 2xl:flex-row gap-8 2xl:gap-9 mt-[31px] lg:mt-[71px] 2xl:mt-[100px] mb-[46.2px] 2xl:mb-[70px] text-sm lg:text-[16px]"
 				>
 					<AccountSelect
 						v-if="apiData?.accounts"
@@ -157,7 +157,7 @@ watch(
 						:accounts="sortedAccounts"
 					/>
 					<div
-						class="hidden xl:block h-full border-[1.5px] border-[#D0D5DD]"
+						class="hidden 2xl:block h-full border-[1.5px] border-[#D0D5DD]"
 					></div>
 					<MetricSelect
 						v-if="metrics"
@@ -170,6 +170,6 @@ watch(
 			</main>
 			<Integrations :logos="rightSideLogos" class="hidden 2xl:block" />
 		</div>
-		<Integrations :logos="logos" class="clock 2xl:hidden" />
+		<Integrations :logos="logos" class="block 2xl:hidden" />
 	</div>
 </template>

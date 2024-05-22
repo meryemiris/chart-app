@@ -9,10 +9,10 @@ const { logos } = defineProps({
 
 <template>
 	<div
-		class="relative top-0 2xl:top-[-58px] 2xl:h-[860px] max-w-screen-sm lg:max-w-screen-lg 2xl:flex-col inline-flex flex-nowrap mx-[33px] 2xl:mx-[90px] [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)] 2xl:[mask-image:_linear-gradient(to_top,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
+		class="relative top-0 2xl:top-[-58px] 2xl:h-[860px] 2xl:flex-col inline-flex flex-nowrap mx-[33px] 2xl:mx-[90px] [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)] 2xl:[mask-image:_linear-gradient(to_top,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
 	>
 		<ul
-			class="flex 2xl:flex-col items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll-x 2xl:animate-infinite-scroll-y"
+			class="flex 2xl:flex-col items-center justify-center md:justify-start [&_li]:mx-6 [&_img]:max-w-none animate-infinite-scroll-x 2xl:animate-infinite-scroll-y"
 		>
 			<template v-for="logo in logos">
 				<li
@@ -27,7 +27,8 @@ const { logos } = defineProps({
 			</template>
 		</ul>
 		<ul
-			class="flex 2xl:flex-col items-center justify-center md:justify-start [&_li]:mx-[18.5px] [&_img]:max-w-none animate-infinite-scroll-x 2xl:animate-infinite-scroll-y"
+			class="flex 2xl:flex-col items-center justify-center md:justify-start [&_li]:mx-6 [&_img]:max-w-none animate-infinite-scroll-x 2xl:animate-infinite-scroll-y"
+			aria-label="hidden"
 		>
 			<template v-for="logo in logos">
 				<li
