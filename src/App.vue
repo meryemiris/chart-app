@@ -116,7 +116,7 @@ watch(
 			class="hidden 2xl:block 2xl:px-[100px]"
 		/>
 
-		<div class="flex flex-col">
+		<div class="flex flex-col flex-shrink">
 			<header
 				class="flex flex-col mx-2 text-center text-2xl/[30px] lg:text-5xl/[60px] gap-3 lg:gap-6 lg:mx-[100px]"
 			>
@@ -124,10 +124,10 @@ watch(
 				<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
 			</header>
 
-			<section id="content" class="mx-[33px]">
+			<section id="content" class="px-[33px]">
 				<section
 					id="selects"
-					class="flex flex-col mt-8 mb-12 mr-[-33px] gap-8 lg:my-[71px] lg:pl-[17px] lg:gap-14 lg:text-[16px]/[38px] 2xl:flex-row 2xl:mx-9"
+					class="flex flex-col mt-8 mb-12 pr-[-33px] gap-8 lg:my-[71px] lg:pl-[17px] lg:gap-14 lg:text-[16px]/[38px] 2xl:flex-row"
 				>
 					<AccountSelect
 						v-if="apiData?.accounts"
