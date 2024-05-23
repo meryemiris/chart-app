@@ -6,7 +6,7 @@ This Vue.js application fetches data from an external API and displays it in a v
 
 ## Demo
 
-Check out the live demo: [Useless Facts Viewer Demo](https://useless-facts-two.vercel.app/)
+Check out the live demo: [Case Viewer Demo](https://wask-case-two.vercel.app/)
 
 ## Recommended IDE Setup
 
