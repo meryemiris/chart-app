@@ -1,9 +1,37 @@
 <script setup>
-const { logos } = defineProps({
-	logos: {
-		type: Array,
-		required: true,
-	},
+import Facebook from "../assets/facebook.svg";
+import YouTube from "../assets/youtube.svg";
+import Instagram from "../assets/instagram.svg";
+import Shopify from "../assets/shopify.svg";
+import SnapChat from "../assets/snapchat.svg";
+import GoogleAnalytics from "../assets/analytics.svg";
+import WordPress from "../assets/wordpress.svg";
+import WooCommerce from "../assets/woo.svg";
+import LinkedIn from "../assets/linkedin.svg";
+import Gmail from "../assets/gmail.svg";
+
+import Google from "../assets/google.svg";
+import WhatsApp from "../assets/whatsapp.svg";
+import Twitter from "../assets/twitter.svg";
+
+const logos = [
+	{ src: GoogleAnalytics, alt: "Google Analytics" },
+	{ src: WordPress, alt: "WordPress" },
+	{ src: LinkedIn, alt: "LinkedIn" },
+	{ src: WooCommerce, alt: "WooCommerce" },
+	{ src: Gmail, alt: "Gmail" },
+	{ src: Facebook, alt: "Facebook" },
+	{ src: YouTube, alt: "YouTube" },
+	{ src: Instagram, alt: "Instagram" },
+	{ src: Shopify, alt: "Shopify" },
+	{ src: SnapChat, alt: "SnapChat" },
+	{ src: Google, alt: "Google" },
+	{ src: WhatsApp, alt: "WhatsApp" },
+	{ src: Twitter, alt: "Twitter" },
+];
+
+const { direction } = defineProps({
+	direction: String,
 });
 </script>
 
@@ -13,7 +41,11 @@ const { logos } = defineProps({
 	>
 		<template v-for="count in 2">
 			<ul
-				class="flex 2xl:flex-col items-center justify-center 2xl:justify-start animate-infinite-scroll-x 2xl:animate-infinite-scroll-y"
+				class="flex 2xl:flex-col items-center justify-center 2xl:justify-start animate-infinite-scroll-x"
+				:class="{
+					'2xl:animate-infinite-scroll-y-direct': direction === 'direct',
+					'2xl:animate-infinite-scroll-y-reverse': direction === 'reverse',
+				}"
 				:aria-hidden="count === 2"
 			>
 				<template v-for="logo in logos">

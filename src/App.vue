@@ -9,33 +9,6 @@ import MetricSelect from "./components/MetricSelect.vue";
 import Integrations from "./components/Integrations.vue";
 import LoadingSpinner from "./components/LoadingSpinner.vue";
 
-import Facebook from "./assets/facebook.svg";
-import YouTube from "./assets/youtube.svg";
-import Instagram from "./assets/instagram.svg";
-import Shopify from "./assets/shopify.svg";
-import SnapChat from "./assets/snapchat.svg";
-import GoogleAnalytics from "./assets/analytics.svg";
-import WordPress from "./assets/wordpress.svg";
-import WooCommerce from "./assets/woo.svg";
-import LinkedIn from "./assets/linkedin.svg";
-import Gmail from "./assets/gmail.svg";
-
-const leftSideLogos = [
-	{ src: GoogleAnalytics, alt: "Google Analytics" },
-	{ src: WordPress, alt: "WordPress" },
-	{ src: LinkedIn, alt: "LinkedIn" },
-	{ src: WooCommerce, alt: "WooCommerce" },
-	{ src: Gmail, alt: "Gmail" },
-];
-const rightSideLogos = [
-	{ src: Facebook, alt: "Facebook" },
-	{ src: YouTube, alt: "YouTube" },
-	{ src: Instagram, alt: "Instagram" },
-	{ src: Shopify, alt: "Shopify" },
-	{ src: SnapChat, alt: "SnapChat" },
-];
-const logos = [...rightSideLogos, ...leftSideLogos];
-
 const apiData = ref(null);
 const isLoading = ref(false);
 
@@ -138,7 +111,8 @@ watch(
 		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:my-[196px] min-[1920px]:max-w-[1920px] 2xl:m-auto"
 	>
 		<Integrations
-			:logos="leftSideLogos"
+			:logos="logos"
+			:direction="'reverse'"
 			class="hidden 2xl:block 2xl:px-[100px]"
 		/>
 
@@ -175,9 +149,9 @@ watch(
 				<Chart v-if="chartInsights" :data="chartInsights" />
 			</section>
 		</div>
-
 		<Integrations
-			:logos="rightSideLogos"
+			:logos="logos"
+			:direction="'direct'"
 			class="hidden 2xl:block 2xl:px-[100px]"
 		/>
 		<Integrations :logos="logos" class="block 2xl:hidden" />
