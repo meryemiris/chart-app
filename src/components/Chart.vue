@@ -96,7 +96,7 @@ const chartOptions = computed(() => ({
 	<div
 		class="bg-[#F9FAFB] p-4 lg:p-7 2xl:p-10 rounded-[4.5px] lg:rounded-[9px] 2xl:rounded-xl"
 	>
-		<div class="bg-red-50 h-[423px] lg:[481px] 2xl:[499px]">
+		<div class="bg-red-50 h-[423px] lg:h-[481px] 2xl:h-[499px]">
 			<Line :data="chartData" :options="chartOptions" />
 		</div>
 	</div>
