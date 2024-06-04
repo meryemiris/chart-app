@@ -100,7 +100,7 @@ watch(
 
 	<main
 		v-if="apiData"
-		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:mt-[196px] 2xl:max-w-[1920px] 2xl:m-auto"
+		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:my-[196px] 2xl:max-w-[1920px] 2xl:m-auto"
 	>
 		<Integrations
 			:direction="'reverse'"
