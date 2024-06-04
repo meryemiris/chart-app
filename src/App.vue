@@ -102,7 +102,6 @@ watch(
 		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:my-[196px] 2xl:max-w-[1920px] 2xl:m-auto"
 	>
 		<Integrations
-			:logos="logos"
 			:direction="'reverse'"
 			class="hidden 2xl:block 2xl:px-[100px]"
 		/>
@@ -139,10 +138,9 @@ watch(
 			</section>
 		</div>
 		<Integrations
-			:logos="logos"
 			:direction="'direct'"
 			class="hidden 2xl:block 2xl:px-[100px]"
 		/>
-		<Integrations :logos="logos" class="block 2xl:hidden" />
+		<Integrations class="block 2xl:hidden" />
 	</main>
 </template>
