@@ -1,19 +1,14 @@
 <script setup>
 import SelectOption from "./SelectOption.vue";
 
-const { metrics, selectedMetric, setSelectedMetric } = defineProps({
+const selectedMetric = defineModel();
+
+const { metrics } = defineProps({
 	metrics: Array,
-	selectedMetric: String,
-	setSelectedMetric: Function,
 });
 const label = " Metric";
 </script>
 
 <template>
-	<SelectOption
-		:label
-		:options="metrics"
-		:selectedOption="selectedMetric"
-		:setSelectedOption="setSelectedMetric"
-	/>
+	<SelectOption :label :options="metrics" v-model="selectedMetric" />
 </template>

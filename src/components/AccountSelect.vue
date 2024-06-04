@@ -1,19 +1,14 @@
 <script setup>
 import SelectOption from "./SelectOption.vue";
 
-const { accounts, selectedAccount, setSelectedAccount } = defineProps({
+const selectedAccount = defineModel();
+
+const { accounts } = defineProps({
 	accounts: Array,
-	selectedAccount: String,
-	setSelectedAccount: Function,
 });
 const label = " Ad Account";
 </script>
 
 <template>
-	<SelectOption
-		:label
-		:options="accounts"
-		:selectedOption="selectedAccount"
-		:setSelectedOption="setSelectedAccount"
-	/>
+	<SelectOption :label :options="accounts" v-model="selectedAccount" />
 </template>

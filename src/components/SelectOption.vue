@@ -1,12 +1,16 @@
 <script setup>
 import arrowRight from "../assets/arrow-right-line.svg";
 
-const { label, options, selectedOption, setSelectedOption } = defineProps({
+const selectedOption = defineModel();
+
+const { label, options } = defineProps({
 	label: String,
 	options: Array,
-	selectedOption: String,
-	setSelectedOption: Function,
 });
+
+const updateSelect = (option) => {
+	selectedOption.value = option;
+};
 </script>
 
 <template>
@@ -25,7 +29,7 @@ const { label, options, selectedOption, setSelectedOption } = defineProps({
 			<button
 				v-for="option in options"
 				:key="option.id"
-				@click="setSelectedOption(option.id)"
+				@click="updateSelect(option.id)"
 				:class="[
 					'rounded-[180px] lg:rounded-[200px] text-nowrap py-[7px] px-[18px] lg:px-[20px] lg:py-[8px]',
 					selectedOption === option.id

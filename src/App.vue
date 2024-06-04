@@ -48,15 +48,6 @@ onMounted(() => {
 	fetchData();
 });
 
-// Update selected account and metric.
-function updateAccount(account) {
-	selectedAccount.value = account;
-}
-
-function updateMetric(metric) {
-	selectedMetric.value = metric;
-}
-
 // Processes API data to extract dates and values for the selected
 // account and metric, returning the data formatted for charting.
 const chartInsights = computed(() => {
@@ -131,8 +122,7 @@ watch(
 				>
 					<AccountSelect
 						v-if="apiData?.accounts"
-						:setSelectedAccount="updateAccount"
-						:selectedAccount="selectedAccount"
+						v-model="selectedAccount"
 						:accounts="sortedAccounts"
 					/>
 
@@ -141,8 +131,7 @@ watch(
 
 					<MetricSelect
 						v-if="metrics"
-						:setSelectedMetric="updateMetric"
-						:selectedMetric="selectedMetric"
+						v-model="selectedMetric"
 						:metrics="metrics"
 					/>
 				</section>
