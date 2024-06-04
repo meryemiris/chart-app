@@ -4,20 +4,20 @@ import { Toaster, toast } from "vue-sonner";
 import "./style.css";
 
 import Chart from "./components/Chart.vue";
-import AccountSelect from "./components/AccountSelect.vue";
-import MetricSelect from "./components/MetricSelect.vue";
 import Integrations from "./components/Integrations.vue";
 import LoadingSpinner from "./components/LoadingSpinner.vue";
+
+import ChartControlButtons from "./components/ChartControlButtons.vue";
 
 const apiData = ref(null);
 const isLoading = ref(false);
 
 // Assumed these metrics are  always available for all accounts
-const metrics = [
+const metrics = ref([
 	{ name: "Clicks", id: "clicks" },
 	{ name: "Impressions", id: "impressions" },
 	{ name: "Spend", id: "spend" },
-];
+]);
 
 const selectedAccount = ref(null);
 const selectedMetric = ref(null);
@@ -89,7 +89,7 @@ watch(
 	() => apiData.value,
 	() => {
 		selectedAccount.value = sortedAccounts.value[0].id;
-		selectedMetric.value = metrics[0].id;
+		selectedMetric.value = metrics.value[0].id;
 	}
 );
 </script>
@@ -99,7 +99,8 @@ watch(
 	<LoadingSpinner v-if="isLoading" />
 
 	<main
-		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:my-[196px] 2xl:max-w-[1920px] 2xl:m-auto"
+		v-if="apiData"
+		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:mt-[96px] 2xl:max-w-[1920px] 2xl:m-auto"
 	>
 		<Integrations
 			:direction="'reverse'"
@@ -113,34 +114,29 @@ watch(
 				<h1 class="text-primary">Marketing Integrations</h1>
 				<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
 			</header>
-
-			<section id="content" class="px-[33px]">
+			<div class="mx-[33px]">
 				<section
-					id="selects"
-					class="flex flex-col mt-8 mb-12 pr-[-33px] gap-8 lg:my-[71px] lg:pl-[17px] lg:gap-14 lg:text-[16px]/[38px] 2xl:flex-row"
+					id="ChartControlButtonsGroup"
+					class="flex flex-col mt-8 mb-12 mr-[-33px] gap-8 lg:my-[71px] lg:pl-[17px] lg:gap-14 lg:text-[16px]/[38px] 2xl:flex-row"
 				>
-					<AccountSelect
-						v-if="apiData?.accounts"
+					<ChartControlButtons
+						label="Ad Account"
 						v-model="selectedAccount"
-						:accounts="sortedAccounts"
+						:options="sortedAccounts"
 					/>
 
 					<!-- seperator -->
 					<div class="hidden 2xl:block border-[1.5px] border-[#D0D5DD]"></div>
 
-					<MetricSelect
-						v-if="metrics"
+					<ChartControlButtons
+						label="Metric"
 						v-model="selectedMetric"
-						:metrics="metrics"
+						:options="metrics"
 					/>
 				</section>
 				<Chart v-if="chartInsights" :data="chartInsights" />
-			</section>
+			</div>
 		</div>
-		<Integrations
-			:direction="'direct'"
-			class="hidden 2xl:block 2xl:px-[100px]"
-		/>
-		<Integrations class="block 2xl:hidden" />
+		<Integrations :direction="'direct'" class="2xl:block 2xl:px-[100px]" />
 	</main>
 </template>

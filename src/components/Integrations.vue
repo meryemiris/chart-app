@@ -41,7 +41,7 @@ const { direction } = defineProps({
 	>
 		<template v-for="count in 2">
 			<ul
-				class="flex 2xl:flex-col items-center justify-center 2xl:justify-start animate-infinite-scroll-x"
+				class="flex 2xl:flex-col items-center 2xl:justify-start animate-infinite-scroll-x"
 				:class="{
 					'2xl:animate-infinite-scroll-y-direct': direction === 'direct',
 					'2xl:animate-infinite-scroll-y-reverse': direction === 'reverse',
