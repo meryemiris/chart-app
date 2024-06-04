@@ -100,7 +100,7 @@ watch(
 
 	<main
 		v-if="apiData"
-		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:mt-[96px] 2xl:max-w-[1920px] 2xl:m-auto"
+		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:mt-[196px] 2xl:max-w-[1920px] 2xl:m-auto"
 	>
 		<Integrations
 			:direction="'reverse'"
@@ -117,7 +117,7 @@ watch(
 			<div class="mx-[33px]">
 				<section
 					id="ChartControlButtonsGroup"
-					class="flex flex-col mt-8 mb-12 mr-[-33px] gap-8 lg:my-[71px] lg:pl-[17px] lg:gap-14 lg:text-[16px]/[38px] 2xl:flex-row"
+					class="flex flex-col mt-8 mb-12 mr-[-33px] lg:mr-0 gap-8 lg:my-[71px] lg:pl-[17px] lg:gap-14 lg:text-[16px]/[38px] 2xl:flex-row"
 				>
 					<ChartControlButtons
 						label="Ad Account"
