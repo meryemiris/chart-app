@@ -9,8 +9,12 @@ import LoadingSpinner from "./components/LoadingSpinner.vue";
 
 import ChartControlButtons from "./components/ChartControlButtons.vue";
 
-const apiData = ref(null);
-const isLoading = ref(false);
+import { useFetch } from "./composables/fetch.js";
+
+const url = import.meta.env.VITE_BASE_URL;
+const token = import.meta.env.VITE_ACCESS_TOKEN;
+
+const { data: apiData, loading } = useFetch(url, "GET", token);
 
 // Assumed these metrics are  always available for all accounts
 const metrics = ref([
@@ -19,34 +23,15 @@ const metrics = ref([
 	{ name: "Spend", id: "spend" },
 ]);
 
+const sortedAccounts = computed(() =>
+	apiData.value?.accounts
+		.slice()
+		.sort((a, b) => a.sort - b.sort)
+		.map((account) => ({ name: account.name, id: account.id }))
+);
+
 const selectedAccount = ref(null);
 const selectedMetric = ref(null);
-
-const fetchData = async () => {
-	try {
-		isLoading.value = true;
-		const response = await fetch(import.meta.env.VITE_BASE_URL, {
-			method: "GET",
-			headers: {
-				token: import.meta.env.VITE_ACCESS_TOKEN,
-			},
-		});
-		if (!response.ok) {
-			toast.error("Failed to fetch data");
-			throw new Error("Failed to fetch data");
-		}
-		const result = await response.json();
-		apiData.value = result;
-	} catch (err) {
-		toast.error(err.message);
-	} finally {
-		isLoading.value = false;
-	}
-};
-
-onMounted(() => {
-	fetchData();
-});
 
 // Processes API data to extract dates and values for the selected
 // account and metric, returning the data formatted for charting.
@@ -77,13 +62,6 @@ const chartInsights = computed(() => {
 	return { dates, values, metric: selectedMetric.value };
 });
 
-const sortedAccounts = computed(() =>
-	apiData.value?.accounts
-		.slice()
-		.sort((a, b) => a.sort - b.sort)
-		.map((account) => ({ name: account.name, id: account.id }))
-);
-
 // Start first account and metric selected
 watch(
 	() => apiData.value,
@@ -96,8 +74,7 @@ watch(
 
 <template>
 	<Toaster position="top-right" rich-colors />
-	<LoadingSpinner v-if="isLoading" />
-
+	<LoadingSpinner v-if="loading" />
 	<main
 		v-if="apiData"
 		class="font-sans font-semibold flex flex-col 2xl:flex-row my-9 lg:my-[66px] 2xl:my-[196px] 2xl:max-w-[1920px] 2xl:m-auto"
