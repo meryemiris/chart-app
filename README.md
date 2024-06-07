@@ -10,7 +10,7 @@ Check out the live demo: [Case Viewer Demo](https://wask-case-two.vercel.app/)
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[VSCode](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
 
 ## Customize configuration
