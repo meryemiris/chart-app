@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { Toaster, toast } from "vue-sonner";
 import "./style.css";
 
@@ -10,11 +10,7 @@ import LoadingSpinner from "./components/LoadingSpinner.vue";
 import ChartControlButtons from "./components/ChartControlButtons.vue";
 
 import { useFetch } from "./composables/fetch.js";
-
-const url = import.meta.env.VITE_BASE_URL;
-const token = import.meta.env.VITE_ACCESS_TOKEN;
-
-const { data: apiData, loading } = useFetch(url, "GET", token);
+const { data: apiData, loading } = useFetch("/data.json");
 
 // Assumed these metrics are  always available for all accounts
 const metrics = ref([
@@ -89,7 +85,9 @@ watch(
 				class="flex flex-col mx-2 text-center text-2xl/[30px] lg:text-5xl/[60px] gap-3 lg:gap-6 lg:mx-[100px]"
 			>
 				<h1 class="text-primary">Marketing Integrations</h1>
-				<h2 class="text-secondary">Trust WASK's smart optimization features</h2>
+				<h2 class="text-secondary">
+					Trust Our Company's smart optimization features
+				</h2>
 			</header>
 			<div class="mx-[33px]">
 				<section

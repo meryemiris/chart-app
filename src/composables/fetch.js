@@ -1,7 +1,7 @@
 import { ref, onMounted } from "vue";
 import { toast } from "vue-sonner";
 
-export function useFetch(url, method = "GET", token) {
+export function useFetch(url) {
 	const data = ref(null);
 	const loading = ref(false);
 
@@ -9,13 +9,11 @@ export function useFetch(url, method = "GET", token) {
 		try {
 			loading.value = true;
 			const response = await fetch(url, {
-				method: method,
-				headers: {
-					token: token,
-				},
+				method: "GET",
 			});
 			const result = await response.json();
 			data.value = result;
+			console.log(result);
 		} catch (err) {
 			toast.error(err.message);
 		} finally {

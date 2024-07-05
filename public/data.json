@@ -1,0 +1,159 @@
+{
+	"accounts": [
+		{
+			"currency": "USD",
+			"id": "act_147",
+			"insights": {
+				"data": [
+					{
+						"clicks": "122",
+						"date_end": "2022-03-27",
+						"date_start": "2022-03-27",
+						"impressions": "13224",
+						"spend": "50.31"
+					},
+					{
+						"clicks": "125",
+						"date_end": "2022-03-28",
+						"date_start": "2022-03-28",
+						"impressions": "17461",
+						"spend": "50.61"
+					},
+					{
+						"clicks": "145",
+						"date_end": "2022-03-29",
+						"date_start": "2022-03-29",
+						"impressions": "27769",
+						"spend": "50.62"
+					}
+				]
+			},
+			"name": "my adaccount 1",
+			"sort": 2
+		},
+		{
+			"currency": "USD",
+			"id": "act_258",
+			"insights": {
+				"data": [
+					{
+						"clicks": "130",
+						"date_end": "2022-04-01",
+						"date_start": "2022-04-01",
+						"impressions": "14230",
+						"spend": "51.00"
+					},
+					{
+						"clicks": "135",
+						"date_end": "2022-04-02",
+						"date_start": "2022-04-02",
+						"impressions": "15890",
+						"spend": "51.30"
+					},
+					{
+						"clicks": "150",
+						"date_end": "2022-04-03",
+						"date_start": "2022-04-03",
+						"impressions": "18900",
+						"spend": "51.50"
+					}
+				]
+			},
+			"name": "my adaccount 2",
+			"sort": 3
+		},
+		{
+			"currency": "USD",
+			"id": "act_369",
+			"insights": {
+				"data": [
+					{
+						"clicks": "190",
+						"date_end": "2022-04-05",
+						"date_start": "2022-04-05",
+						"impressions": "19220",
+						"spend": "52.00"
+					},
+					{
+						"clicks": "145",
+						"date_end": "2022-04-06",
+						"date_start": "2022-04-06",
+						"impressions": "17650",
+						"spend": "52.20"
+					},
+					{
+						"clicks": "110",
+						"date_end": "2022-04-07",
+						"date_start": "2022-04-07",
+						"impressions": "12300",
+						"spend": "52.50"
+					}
+				]
+			},
+			"name": "my adaccount 3",
+			"sort": 1
+		},
+		{
+			"currency": "USD",
+			"id": "act_470",
+			"insights": {
+				"data": [
+					{
+						"clicks": "192",
+						"date_end": "2022-04-10",
+						"date_start": "2022-04-10",
+						"impressions": "27500",
+						"spend": "53.00"
+					},
+					{
+						"clicks": "155",
+						"date_end": "2022-04-11",
+						"date_start": "2022-04-11",
+						"impressions": "12000",
+						"spend": "53.20"
+					},
+					{
+						"clicks": "170",
+						"date_end": "2022-04-12",
+						"date_start": "2022-04-12",
+						"impressions": "15000",
+						"spend": "53.50"
+					}
+				]
+			},
+			"name": "my adaccount 4",
+			"sort": 4
+		},
+		{
+			"currency": "USD",
+			"id": "act_581",
+			"insights": {
+				"data": [
+					{
+						"clicks": "200",
+						"date_end": "2022-04-15",
+						"date_start": "2022-04-15",
+						"impressions": "18500",
+						"spend": "54.00"
+					},
+					{
+						"clicks": "165",
+						"date_end": "2022-04-16",
+						"date_start": "2022-04-16",
+						"impressions": "29000",
+						"spend": "54.20"
+					},
+					{
+						"clicks": "180",
+						"date_end": "2022-04-17",
+						"date_start": "2022-04-17",
+						"impressions": "20500",
+						"spend": "54.50"
+					}
+				]
+			},
+			"name": "my adaccount 5",
+			"sort": 5
+		}
+	]
+}

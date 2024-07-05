@@ -31,7 +31,7 @@ const updateSelect = (option) => {
 				:key="option.id"
 				@click="updateSelect(option.id)"
 				:class="[
-					'rounded-[180px] lg:rounded-[200px] text-nowrap py-[7px] px-[18px] lg:px-[20px] lg:py-[8px]',
+					'rounded-[180px] lg:rounded-[200px] text-nowrap py-[7px] px-[18px] lg:px-[20px] lg:py-[8px] hover:bg-primary hover:text-white',
 					selectedOption === option.id
 						? 'bg-primary text-white'
 						: 'bg-[#F9FAFB] text-[#D0D5DD]',

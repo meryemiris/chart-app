@@ -80,7 +80,6 @@ const chartOptions = computed(() => ({
 			},
 		},
 	},
-
 	scales: {
 		x: {
 			beginAtZero: false,
