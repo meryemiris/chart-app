@@ -1,4 +1,4 @@
-# WASK Case Study
+# Chart app
 
 ## Overview
 
